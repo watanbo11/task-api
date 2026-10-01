@@ -1,6 +1,8 @@
 package com.example.task_api.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
@@ -23,4 +25,27 @@ public class TaskController {
         
         return  response;
     }
-}
+
+    @GetMapping 
+    public List<TaskResponse> getTasks() {
+        List<TaskResponse> tasks = new ArrayList<>();
+        TaskResponse response1 = new TaskResponse();
+        response1.setId(1);
+        response1.setTitle("Javaを勉強する");
+
+        TaskResponse response2 = new TaskResponse();
+        response2.setId(2);
+        response2.setTitle("Spring Bootを勉強する");
+
+        TaskResponse response3 = new TaskResponse();
+        response3.setId(3);
+        response3.setTitle("Gitを勉強する");
+
+        tasks.add(response1);
+        tasks.add(response2);
+        tasks.add(response3);
+
+        return tasks;
+    }
+
+    }
