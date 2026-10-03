@@ -8,9 +8,12 @@ import java.util.Map;
 import org.apache.commons.logging.Log;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.task_api.request.TaskRequest;
 import com.example.task_api.response.TaskResponse;
 
 @RestController 
@@ -48,4 +51,12 @@ public class TaskController {
         return tasks;
     }
 
+    @PostMapping
+    public TaskResponse regist(@RequestBody  TaskRequest request) {
+        TaskResponse response = new TaskResponse();
+        response.setId(1);
+        response.setTitle(request.getTitle());
+
+        return  response;
+    }
     }
