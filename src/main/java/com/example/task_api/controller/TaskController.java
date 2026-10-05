@@ -20,10 +20,18 @@ import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskDeleteResponse;
 import com.example.task_api.response.TaskResponse;
+import com.example.task_api.service.TaskService;
 
 @RestController 
 @RequestMapping("/api/tasks")
 public class TaskController {
+
+    private TaskService service;
+    
+
+    public TaskController(TaskService service) {
+        this.service = service;
+    }
 
     @GetMapping ("/{id}")
     public TaskResponse tasks(@PathVariable Integer id) {
@@ -58,10 +66,8 @@ public class TaskController {
 
     @PostMapping
     public TaskResponse regist(@RequestBody  TaskRequest request) {
-        TaskResponse response = new TaskResponse();
-        response.setId(1);
-        response.setTitle(request.getTitle());
 
+        TaskResponse response = service.createTask(request);
         return  response;
     }
 
