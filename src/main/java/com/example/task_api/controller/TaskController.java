@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.task_api.request.TaskRequest;
+import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskResponse;
 
 @RestController 
@@ -63,7 +64,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskResponse updateTask(@PathVariable Integer id ,@RequestBody TaskRequest request) {    
+    public TaskResponse updateTask(@PathVariable Integer id ,@RequestBody TaskUpdateRequest request) {    
 
         TaskResponse response = new TaskResponse();
         response.setId(id);
