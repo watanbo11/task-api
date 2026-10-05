@@ -22,22 +22,6 @@ public class TaskService {
 
     public  List<TaskResponse> getTasks() {
         
-        TaskResponse response1 = new TaskResponse();
-        response1.setId(task.size()+1);
-        response1.setTitle("Javaを勉強する");
-
-        TaskResponse response2 = new TaskResponse();
-        response2.setId(task.size()+1);
-        response2.setTitle("Spring Bootを勉強する");
-
-        TaskResponse response3 = new TaskResponse();
-        response3.setId(task.size()+1);
-        response3.setTitle("Gitを勉強する");
-
-        task.add(response1);
-        task.add(response2);
-        task.add(response3);
-
         return  task;
     }
 }
