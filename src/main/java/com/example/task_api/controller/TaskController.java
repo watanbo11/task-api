@@ -35,9 +35,9 @@ public class TaskController {
 
     @GetMapping ("/{id}")
     public TaskResponse tasks(@PathVariable Integer id) {
-        TaskResponse response = new TaskResponse();
-        response.setId(id);
-        response.setTitle("sample task");
+
+
+        TaskResponse response = service.getTaskById(id);
         
         return  response;
     }

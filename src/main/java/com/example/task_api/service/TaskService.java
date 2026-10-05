@@ -10,18 +10,28 @@ import com.example.task_api.response.TaskResponse;
 
 @Service 
 public class TaskService {
-    List<TaskResponse> task = new ArrayList<>();
+    List<TaskResponse> tasks = new ArrayList<>();
 
     public  TaskResponse createTask(TaskRequest request)  {
         TaskResponse response = new TaskResponse();
-        response.setId(task.size()+1);
+        response.setId(tasks.size()+1);
         response.setTitle(request.getTitle());
-        task.add(response);
+        tasks.add(response);
         return  response;
     }
 
     public  List<TaskResponse> getTasks() {
         
-        return  task;
+        return  tasks;
+    }
+
+    public TaskResponse getTaskById(Integer id) {
+        for(TaskResponse response : tasks) {
+            if(response.getId().equals(id)) {
+                return response;
+            }
+            
+        }
+        return  null;
     }
 }
