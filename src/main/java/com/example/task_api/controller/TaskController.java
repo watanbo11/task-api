@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.springframework.scheduling.config.Task;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
+import com.example.task_api.response.TaskDeleteResponse;
 import com.example.task_api.response.TaskResponse;
 
 @RestController 
@@ -71,5 +73,15 @@ public class TaskController {
         response.setTitle(request.getTitle());
         return  response;
         
+    }
+
+    @DeleteMapping("/{id}")
+    public  TaskDeleteResponse deleteTask(@PathVariable Integer id) {
+
+        TaskDeleteResponse response = new TaskDeleteResponse();
+        response.setId(id);
+        response.setMessage("Task deleted");
+
+        return  response;
     }
     }
