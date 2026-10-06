@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.logging.Log;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.config.Task;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
@@ -34,12 +37,19 @@ public class TaskController {
     }
 
     @GetMapping ("/{id}")
-    public TaskResponse tasks(@PathVariable Integer id) {
+    public ResponseEntity<?> tasks(@PathVariable Integer id) {
 
 
         TaskResponse response = service.getTaskById(id);
-        
-        return  response;
+        if(response==null) {
+            Map<String,String> error = new HashMap<>();
+            error.put("mesage", "タスクが見つかりません");
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND)
+                                  .body(error);
+        }
+
+        return  ResponseEntity.ok()
+                              .body(response);
     }
 
     @GetMapping 
