@@ -43,7 +43,7 @@ public class TaskController {
         TaskResponse response = service.getTaskById(id);
         if(response==null) {
             Map<String,String> error = new HashMap<>();
-            error.put("mesage", "タスクが見つかりません");
+            error.put("message", "タスクが見つかりません");
             return  ResponseEntity.status(HttpStatus.NOT_FOUND)
                                   .body(error);
         }

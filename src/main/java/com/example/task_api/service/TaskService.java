@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.task_api.exception.TaskNotFoundException;
 import com.example.task_api.request.TaskRequest;
 import com.example.task_api.response.TaskResponse;
 
@@ -32,6 +33,6 @@ public class TaskService {
             }
             
         }
-        return  null;
+        throw new TaskNotFoundException("task not found");
     }
 }
