@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.task_api.exception.TaskNotFoundException;
 import com.example.task_api.request.TaskRequest;
+import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskResponse;
 
 @Service 
@@ -34,5 +35,15 @@ public class TaskService {
             
         }
         throw new TaskNotFoundException("task not found");
+    }
+
+    public  TaskResponse updateTask(Integer id , TaskUpdateRequest request) {
+        for(TaskResponse task : tasks) {
+            if(id.equals(task.getId())) {
+                task.setTitle(request.getTitle());
+                return  task;
+            }
+        }
+         throw new TaskNotFoundException("更新対象のタスクが見つかりません");
     }
 }

@@ -67,12 +67,12 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskResponse updateTask(@PathVariable Integer id ,@RequestBody TaskUpdateRequest request) {    
+    public ResponseEntity<TaskResponse> updateTask(@PathVariable Integer id ,@RequestBody TaskUpdateRequest request) {    
 
-        TaskResponse response = new TaskResponse();
-        response.setId(id);
-        response.setTitle(request.getTitle());
-        return  response;
+        TaskResponse response = service.updateTask(id,request);
+        
+        return  ResponseEntity.ok()
+                              .body(response);
         
     }
 
