@@ -5,14 +5,35 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.example.task_api.entity.Task;
 import com.example.task_api.exception.TaskNotFoundException;
+import com.example.task_api.repository.TaskRepository;
 import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskResponse;
 
 @Service 
 public class TaskService {
+    private  TaskRepository repository;
+    
+    public TaskService(TaskRepository repository) {
+        this.repository = repository;
+    }
+
     List<TaskResponse> tasks = new ArrayList<>();
+
+    public List<TaskResponse> getTasks() {
+        List<Task> tasks = repository.findAll();
+
+        List<TaskResponse> list = new ArrayList<>();
+        for(Task task : tasks) {
+            TaskResponse response = new TaskResponse();
+            response.setId(task.getId());
+            response.setTitle(task.getTitle());
+            list.add(response);
+        }
+        return  list;
+    }
 
     public  TaskResponse createTask(TaskRequest request)  {
         TaskResponse response = new TaskResponse();
@@ -22,10 +43,7 @@ public class TaskService {
         return  response;
     }
 
-    public  List<TaskResponse> getTasks() {
-        
-        return  tasks;
-    }
+  
 
     public TaskResponse getTaskById(Integer id) {
         for(TaskResponse response : tasks) {

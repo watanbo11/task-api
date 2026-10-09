@@ -36,6 +36,7 @@ public class TaskController {
         this.service = service;
     }
 
+    //パスパラメーターで送られてたidのタスクを取得
     @GetMapping ("/{id}")
     public ResponseEntity<?> tasks(@PathVariable Integer id) {
 
@@ -53,10 +54,11 @@ public class TaskController {
     }
 
     @GetMapping 
-    public List<TaskResponse> getTasks() {
+    public ResponseEntity<List<TaskResponse>> getTasks() {
       
         List<TaskResponse> responses = service.getTasks();
-        return responses;
+        return ResponseEntity.ok()
+                             .body(responses);
     }
 
     @PostMapping
