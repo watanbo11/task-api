@@ -7,8 +7,10 @@ import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.scheduling.config.Task;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,11 +21,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException.NotFound;
 
+import com.example.task_api.request.TaskCreateRequest;
 import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskDeleteResponse;
 import com.example.task_api.response.TaskResponse;
 import com.example.task_api.service.TaskService;
+
+import jakarta.validation.Valid;
 
 @RestController 
 @RequestMapping("/api/tasks")
@@ -60,12 +65,18 @@ public class TaskController {
         return ResponseEntity.ok()
                              .body(responses);
     }
-
+    
+    // タスク登録
+    /**
+     * 
+     * @param request
+     * @return 登録成功の場合、HTTPステータス201
+     */
     @PostMapping
-    public TaskResponse regist(@RequestBody  TaskRequest request) {
+    public ResponseEntity<Void> createTask(@Valid @RequestBody  TaskCreateRequest request) {
 
-        TaskResponse response = service.createTask(request);
-        return  response;
+        service.createTask(request);
+        return  ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PutMapping("/{id}")

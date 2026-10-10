@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.example.task_api.entity.Task;
 import com.example.task_api.exception.TaskNotFoundException;
 import com.example.task_api.repository.TaskRepository;
+import com.example.task_api.request.TaskCreateRequest;
 import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskResponse;
@@ -35,12 +36,13 @@ public class TaskService {
         return  list;
     }
 
-    public  TaskResponse createTask(TaskRequest request)  {
-        TaskResponse response = new TaskResponse();
-        response.setId(tasks.size()+1);
-        response.setTitle(request.getTitle());
-        tasks.add(response);
-        return  response;
+    public  void createTask(TaskCreateRequest request)  {
+
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+
+        repository.save(task);
+        
     }
 
   

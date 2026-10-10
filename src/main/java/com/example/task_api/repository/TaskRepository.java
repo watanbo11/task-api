@@ -23,12 +23,17 @@ public class TaskRepository  {
     }
 
     
-
+    //全件タスク取得
     public List<Task> findAll() {
         TaskRowMapper mapper = new TaskRowMapper();
         String sql = "SELECT * FROM tasks";
         return template.query(sql, mapper);
 
+    }
+
+    public int save(Task task) {
+        String sql = "INSERT INTO tasks (title) VALUES(?)";
+        return  template.update(sql,task.getTitle());
     }
 
 

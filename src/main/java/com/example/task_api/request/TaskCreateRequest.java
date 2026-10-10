@@ -2,7 +2,7 @@ package com.example.task_api.request;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class TaskRequest {
+public class TaskCreateRequest {
     @NotBlank 
     private String title;
 
