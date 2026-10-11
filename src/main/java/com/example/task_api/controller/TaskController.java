@@ -97,12 +97,11 @@ public class TaskController {
     }
 
     @DeleteMapping("/{id}")
-    public  TaskDeleteResponse deleteTask(@PathVariable Integer id) {
+    public  ResponseEntity<Void> deleteTask(@PathVariable Integer id) {
 
-        TaskDeleteResponse response = new TaskDeleteResponse();
-        response.setId(id);
-        response.setMessage("Task deleted");
 
-        return  response;
+        service.deleteTask(id);
+
+        return  ResponseEntity.noContent().build();
     }
     }

@@ -53,6 +53,14 @@ public class TaskRepository  {
     return  count;
    }
 
+   //タスク削除
+   public int deleteTask(Integer id) {
+    String sql = "DELETE FROM tasks WHERE id = ?";
+    int count = template.update(sql,id);
+
+    return count;
+   }
+
 
    
 }

@@ -21,8 +21,11 @@ public class TaskService {
         this.repository = repository;
     }
 
-    List<TaskResponse> tasks = new ArrayList<>();
 
+    /**
+     * 全タスク取得
+     * @return　全タスク
+     */
     public List<TaskResponse> getTasks() {
         List<Task> tasks = repository.findAll();
 
@@ -36,7 +39,10 @@ public class TaskService {
         return  list;
     }
 
-    //タスク登録
+    /**
+     * 特定のタスクの更新
+     * @param request
+     */
     public  void createTask(TaskCreateRequest request)  {
 
         Task task = new Task();
@@ -47,7 +53,11 @@ public class TaskService {
     }
 
   
-    //特定のタスクを指定して取得
+    /**
+     * 特定のタスクを取得
+     * @param id
+     * @return idで指定されたタスク
+     */
     public TaskResponse getTaskById(Integer id) {
        Optional<Task> optionalTask = repository.findById(id);
        Task task =optionalTask.orElseThrow(() -> new TaskNotFoundException("タスクが見つかりません"));
@@ -72,5 +82,13 @@ public class TaskService {
             throw new TaskNotFoundException("更新対象のタスクがありません");
         }
       
+    }
+
+    public  void deleteTask(Integer id) {
+        int result = repository.deleteTask(id);
+
+        if(result ==0) {
+            throw new TaskNotFoundException("削除対象のタスクがありません");
+        }
     }
 }
