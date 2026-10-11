@@ -1,8 +1,11 @@
 package com.example.task_api.request;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class TaskUpdateRequest {
 
     private  Integer id;
+    @NotBlank 
     private  String title;
     public Integer getId() {
         return id;

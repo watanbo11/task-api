@@ -57,13 +57,20 @@ public class TaskService {
        return  response;
     }
 
-    public  TaskResponse updateTask(Integer id , TaskUpdateRequest request) {
-        for(TaskResponse task : tasks) {
-            if(id.equals(task.getId())) {
-                task.setTitle(request.getTitle());
-                return  task;
-            }
+    /**
+     * 更新タスク
+     * @param id
+     * @param request
+     * @return 更新対象のタスク
+     */
+    public  void updateTask(Integer id , TaskUpdateRequest request) {
+        Task task = new Task();
+        task.setTitle(request.getTitle());
+
+        int result = repository.updateTask(task, id);
+        if(result ==0) {
+            throw new TaskNotFoundException("更新対象のタスクがありません");
         }
-         throw new TaskNotFoundException("更新対象のタスクが見つかりません");
+      
     }
 }

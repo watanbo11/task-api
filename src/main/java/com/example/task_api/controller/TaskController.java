@@ -41,7 +41,11 @@ public class TaskController {
         this.service = service;
     }
 
-    //パスパラメーターで送られてたidのタスクを取得
+    /**
+     * パラメータで送られてきたidのタスクを取得する
+     * @param id
+     * @return 引数で受け取ったidのタスク
+     */
     @GetMapping ("/{id}")
     public ResponseEntity<TaskResponse> getTaskById(@PathVariable Integer id) {
 
@@ -52,6 +56,10 @@ public class TaskController {
                               .body(response);
     }
 
+    /**
+     * 登録されているすべてのタスクを取得
+     * @return 全タスク
+     */
     @GetMapping 
     public ResponseEntity<List<TaskResponse>> getTasks() {
       
@@ -73,13 +81,18 @@ public class TaskController {
         return  ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    /**
+     * 指定されたidのタスクを更新する
+     * @param id
+     * @param request
+     * @return 更新対象のタスク
+     */
     @PutMapping("/{id}")
-    public ResponseEntity<TaskResponse> updateTask(@PathVariable Integer id ,@RequestBody TaskUpdateRequest request) {    
+    public ResponseEntity<Void> updateTask( @PathVariable Integer id ,@Valid @RequestBody TaskUpdateRequest request) {    
 
-        TaskResponse response = service.updateTask(id,request);
+        service.updateTask(id,request);
         
-        return  ResponseEntity.ok()
-                              .body(response);
+        return  ResponseEntity.noContent().build();
         
     }
 

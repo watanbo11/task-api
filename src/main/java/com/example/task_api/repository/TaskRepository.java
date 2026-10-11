@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.task_api.entity.Task;
+import com.example.task_api.request.TaskUpdateRequest;
 
 @Repository 
 public class TaskRepository  {
@@ -44,6 +45,13 @@ public class TaskRepository  {
 
     return  task;
    }  
+
+   //タスク更新
+   public int updateTask(Task task,Integer id) {
+    String sql = "UPDATE tasks SET title = ? WHERE id =?";
+    int count = template.update(sql,task.getTitle(),id);
+    return  count;
+   }
 
 
    
