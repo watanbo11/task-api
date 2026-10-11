@@ -43,17 +43,11 @@ public class TaskController {
 
     //パスパラメーターで送られてたidのタスクを取得
     @GetMapping ("/{id}")
-    public ResponseEntity<?> tasks(@PathVariable Integer id) {
+    public ResponseEntity<TaskResponse> getTaskById(@PathVariable Integer id) {
 
 
         TaskResponse response = service.getTaskById(id);
-        if(response==null) {
-            Map<String,String> error = new HashMap<>();
-            error.put("message", "タスクが見つかりません");
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND)
-                                  .body(error);
-        }
-
+        
         return  ResponseEntity.ok()
                               .body(response);
     }

@@ -2,6 +2,7 @@ package com.example.task_api.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -9,7 +10,6 @@ import com.example.task_api.entity.Task;
 import com.example.task_api.exception.TaskNotFoundException;
 import com.example.task_api.repository.TaskRepository;
 import com.example.task_api.request.TaskCreateRequest;
-import com.example.task_api.request.TaskRequest;
 import com.example.task_api.request.TaskUpdateRequest;
 import com.example.task_api.response.TaskResponse;
 
@@ -36,6 +36,7 @@ public class TaskService {
         return  list;
     }
 
+    //タスク登録
     public  void createTask(TaskCreateRequest request)  {
 
         Task task = new Task();
@@ -46,15 +47,14 @@ public class TaskService {
     }
 
   
-
+    //特定のタスクを指定して取得
     public TaskResponse getTaskById(Integer id) {
-        for(TaskResponse response : tasks) {
-            if(response.getId().equals(id)) {
-                return response;
-            }
-            
-        }
-        throw new TaskNotFoundException("task not found");
+       Optional<Task> optionalTask = repository.findById(id);
+       Task task =optionalTask.orElseThrow(() -> new TaskNotFoundException("タスクが見つかりません"));
+       TaskResponse response = new TaskResponse();
+       response.setId(task.getId());
+       response.setTitle(task.getTitle());
+       return  response;
     }
 
     public  TaskResponse updateTask(Integer id , TaskUpdateRequest request) {

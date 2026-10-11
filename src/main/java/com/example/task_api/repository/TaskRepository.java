@@ -1,15 +1,12 @@
 package com.example.task_api.repository;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
-import org.springframework.jdbc.core.RowMapper;
+import java.util.Optional;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.task_api.entity.Task;
-import com.example.task_api.response.TaskResponse;
-import com.example.task_api.service.TaskService;
 
 @Repository 
 public class TaskRepository  {
@@ -30,12 +27,23 @@ public class TaskRepository  {
         return template.query(sql, mapper);
 
     }
-
+    //タスク登録
     public int save(Task task) {
         String sql = "INSERT INTO tasks (title) VALUES(?)";
         return  template.update(sql,task.getTitle());
     }
 
+   //特定のタスク取得
+   public Optional<Task> findById(Integer id) {
+    TaskRowMapper mapper = new TaskRowMapper();
+    String sql = "SELECT * FROM tasks WHERE id = ?";
+
+    List<Task> tasks =template.query(sql, mapper,id);
+
+    Optional<Task> task = tasks.stream().findFirst();
+
+    return  task;
+   }  
 
 
    
